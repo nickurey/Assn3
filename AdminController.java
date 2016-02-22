@@ -126,4 +126,10 @@ public class AdminController {
 		DataPool.createFacility(name, facility, pricePeak, priceNonPeak, cap);
 	}
 
+
+	public void updateFacility(int idToUpdate, String name, String facility, int pricePeak, int priceNonPeak, int cap) {
+		// TODO Auto-generated method stub
+		DataPool.updateFacility(idToUpdate,  name,  facility,  pricePeak,  priceNonPeak, cap);
+	}
+
 }

@@ -299,5 +299,57 @@ public class DBQuery {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void runSearchFacility(String name, String facility) {
+		// TODO Auto-generated method stub
+		String sql;
+		if (facility.equalsIgnoreCase("all"))
+			sql = "Select * from Facility where FacilityName like '%"+name+"%'";
+		else 
+			sql = "Select * from Facility where FacilityName like '%"+name+"%' and FacilityType = '"+facility+"'";
+		try {
+			System.out.println(sql);
+			Statement stmt = dbConnection.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("Add SQL failed");
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void runRemoveFacility(int idToDelete) {
+		// TODO Auto-generated method stub
+		String sql = "Delete from Facility where ID = '"+idToDelete+"'";
+		System.out.println(sql);
+		try {
+			System.out.println(sql);
+			Statement stmt = dbConnection.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("SQL failed");
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void runUpdateFacility(int idToUpdate, String name, String facility, int pricePeak, int priceNonPeak,
+			int cap) {
+		// TODO Auto-generated method stub
+		String sql = "Update Facility SET "
+		+"FacilityName = '"+name+"' ,"
+		+"FacilityType = '"+facility+"' ,"
+		+"PriceAtPeak = '"+pricePeak+"' ,"
+		+"PriceAtNonPeak = '"+priceNonPeak+"' ,"
+		+"capacity = '"+cap+"' where ID = '"+idToUpdate+"'"
+		;
+		System.out.println(sql);
+		try {
+			System.out.println(sql);
+			Statement stmt = dbConnection.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("SQL failed");
+			System.out.println(e.getMessage());
+		}
+	}
 
 }

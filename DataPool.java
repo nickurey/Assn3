@@ -117,6 +117,16 @@ public class DataPool {
 		// TODO Auto-generated method stub
 		query.runInsertFacility(name, facility, pricePeak, priceNonPeak, cap);
 	}
+
+	public void removeFacility(int idToDelete) {
+		// TODO Auto-generated method stub
+		query.runRemoveFacility(idToDelete);
+	}
+
+	public void updateFacility(int idToUpdate, String name, String facility, int pricePeak, int priceNonPeak, int cap) {
+		// TODO Auto-generated method stub
+		query.runUpdateFacility(idToUpdate,  name,  facility,  pricePeak,  priceNonPeak, cap);
+	}
     
      
     

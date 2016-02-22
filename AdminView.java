@@ -12,9 +12,10 @@ public class AdminView {
 	private CreatememberView f2;
 	private CreateBookingView fBookingView;
 	private CreateFacilityView fCreateFacilityView;
+	private UpdateFacilityView fUpdateFacility;
 	private DeleteMemberView fDelete;
 	private ResetMemberPasswordView fResetPlayer;
-	//private TopScoreView fTopScore;
+	private SearchFacilityView fSearchFacility;
 	private ResetAdminPasswordView fResetAdmin;
 	
 	public AdminView(Admin admin, AdminController controller) {
@@ -104,6 +105,8 @@ public class AdminView {
 		if (fCreateFacilityView!= null) fCreateFacilityView.setVisible(false);
 		if (fResetAdmin!= null) fResetAdmin.setVisible(false);
 		if (fBookingView!= null) fBookingView.setVisible(false);
+		if (fSearchFacility!= null) fSearchFacility.setVisible(false);
+		
 		
 	}
 	public void resetPlayerPassword(String name, String password) throws CreateMemberException {
@@ -134,11 +137,35 @@ public class AdminView {
 		f1.setVisible(false);
 		
 	}
+	public void frameUpdateFacility(int idToUpdate) {
+		// TODO Auto-generated method stub
+		fUpdateFacility = new UpdateFacilityView(this, idToUpdate);
+		fUpdateFacility.setLocationRelativeTo(null);
+		fUpdateFacility.setVisible(true);
+		fSearchFacility.setVisible(false);
+		f1.setVisible(false);
+		
+	}
+	//UpdateFacilityView
 	public void createFacility(String name, String facility, int pricePeak, int priceNonPeak, int cap) {
 		// TODO Auto-generated method stub
 		controller.createFacility(name, facility, pricePeak, priceNonPeak, cap);
 		
 	}
+	public void frameSearchFacility() {
+		// TODO Auto-generated method stub
+		fSearchFacility = new SearchFacilityView(this);
+		fSearchFacility.setLocationRelativeTo(null);
+		fSearchFacility.setVisible(true);
+		if (fUpdateFacility!= null) fUpdateFacility.setVisible(false);
+		f1.setVisible(false);
+		
+	}
+	public void updateFacility(int idToUpdate, String name, String facility, int pricePeak, int priceNonPeak, int cap) {
+		// TODO Auto-generated method stub
+		controller.updateFacility(idToUpdate,  name,  facility,  pricePeak,  priceNonPeak, cap);
+	}
+
 
 
 
