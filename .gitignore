@@ -78,3 +78,7 @@
 /UpdateFacilityView$ButtonListener.class
 /UpdateFacilityView$SubmitButtonListener.class
 /UpdateFacilityView.class
+/RegisterMemberView$ButtonListener.class
+/RegisterMemberView$SubmitButtonListener.class
+/RegisterMemberView.class
+/AdminModule$ButtonRegisterListener.class

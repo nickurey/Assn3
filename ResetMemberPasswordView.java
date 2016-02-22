@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import Common.CreateMemberException;
+
 
 public class ResetMemberPasswordView extends JFrame{
 	private Admin admin;

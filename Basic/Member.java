@@ -12,27 +12,20 @@ package Basic;
 
 public class Member extends User {
     
-    private int points;
+    private int membership;
     
-    public Member(int id, String loginName,String hashedPassword,int points)
+    public Member(int id, String loginName,String hashedPassword,int m)
     {
         super(id,loginName,hashedPassword);
-        this.points=points;
+        this.membership=m;
     }
+
     
-    public int getPoints()
-    {
-        return points;
-    }
-    
-    public void addPoints(int points)
-    {
-        this.points+=points;
-    }
-    
-    public void deductPoints(int points)
-    {
-        this.points-=points;
-    }
+    public Member(String name, String fN, String lN, String pw) {
+		// TODO Auto-generated constructor stub
+    	super(name, fN, lN, pw);
+	}
+
+
      
 }

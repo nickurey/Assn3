@@ -67,19 +67,7 @@ public class DBQuery {
 		
 		return Member;
 	}
-	
-	
-	public ArrayList<Member> getTopScorer(){
-		
-		
-		String sql = "SELECT * from User where points = (SELECT MAX(points) from User)";
-		
-		ArrayList<Member> Members  = runGetMemberListQuery(sql);
-		
-		return Members;
-		
-	}
-	
+
 	public ArrayList<Member> runGetMemberListQuery(String query) {
 		
     
@@ -92,11 +80,15 @@ public class DBQuery {
 			while (rset.next()) {
 				int id = Integer.parseInt(rset.getString("id"));
 				String login = rset.getString("username");
+				String fN = rset.getString("firstName");
+				String lN = rset.getString("lastname");
 				String hashPW = rset.getString("password");
 				String role = rset.getString("role");
-				int points = Integer.parseInt(rset.getString("points"));
+				int membership = Integer.parseInt(rset.getString("membership"));
 				
-				Member member = new Member(id, login,hashPW, points);
+				Member member = new Member(id, login,hashPW, membership);
+				member.setfName(fN);
+				member.setlName(lN);
 				member.setRole(role);
 				Members.add(member);
 			}
@@ -109,19 +101,41 @@ public class DBQuery {
 		return Members;
 	}
 
-	public void runAddMemberSQL(Member Member) {
-		
+	public boolean checkIfMemberExists(String username){
+		String sql = "SELECT count(*) FROM user WHERE username = '"+username+"'";
+System.out.println(sql);
+		ResultSet rset;
+		int rowCount = 0;
 		try {
 			
-			String sql = "Insert into User (username,password,points)";
-			sql+=" value('"+Member.getLoginName()+"','"+Member.getHashedPassword()+"',"+Member.getPoints()+")";
-			
 			Statement stmt = dbConnection.createStatement();
-			stmt.executeUpdate(sql);
+			rset = stmt.executeQuery(sql);
+			if (rset.next())
+			rowCount = rset.getInt(1);
+		
 		} catch (Exception e) {
 			System.out.println("Add SQL failed");
 			System.out.println(e.getMessage());
 		}
+		
+		if (rowCount == 1) return true;
+		else return false;
+	}
+	public void runAddMemberSQL(Member Member) throws CreateMemberException, SQLException {
+		
+//		try {
+			if (checkIfMemberExists(Member.getLoginName())){
+				throw new CreateMemberException("Member exists");
+			}
+			String sql = "Insert into User (username,password,firstname, lastname, membership, role)";
+			sql+=" value('"+Member.getLoginName()+"','"+Member.getHashedPassword()+"','"+Member.getfName()+"','"+Member.getlName()+"','"+Member.getMembership()+"','"+Member.getRole()+"')";
+			System.out.println(sql);
+			Statement stmt = dbConnection.createStatement();
+			stmt.executeUpdate(sql);
+//		} catch (Exception e) {
+//			System.out.println("Add SQL failed");
+//			System.out.println(e.getMessage());
+//		}
 	}
 	
 	public void runDeleteMemberSQL(String name) {

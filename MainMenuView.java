@@ -20,6 +20,7 @@ public class MainMenuView extends JFrame{
 		
 		this.controller=controller;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
 		panel = new JPanel();
 		label = new JLabel("Frame 1");
 		button0 = new JButton("Create a booking");
@@ -34,6 +35,7 @@ public class MainMenuView extends JFrame{
 		button4.addActionListener(new ChangeAdminPasswordButtonListener());
 		button5 = new JButton("Log Out");
 		button5.addActionListener(new LogoutButtonListener());
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 		//panel.add(label);
 		panel.add(button0);
 		panel.add(button1);
@@ -45,7 +47,7 @@ public class MainMenuView extends JFrame{
 		panel.setBorder(BorderFactory.createTitledBorder("ADMIN MAIN MENU"));
 		panel.setLayout(new GridLayout(6,1));
 		panel.setBackground(Color.white);
-		add(panel);
+		getContentPane().add(panel);
 		
 		
 	}

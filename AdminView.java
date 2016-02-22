@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import Basic.Facility;
 import Basic.Member;
+import Common.CreateMemberException;
 
 public class AdminView {
 
@@ -9,7 +10,6 @@ public class AdminView {
 	private Admin admin;
 	private AdminController controller;
 	private MainMenuView f1;
-	private CreatememberView f2;
 	private CreateBookingView fBookingView;
 	private CreateFacilityView fCreateFacilityView;
 	private UpdateFacilityView fUpdateFacility;
@@ -48,14 +48,6 @@ public class AdminView {
 		f1.setVisible(false);
 	}
 	
-	public void frame1CallBack(){
-		f2 = new CreatememberView(this);
-		f2.pack();
-		f2.setLocationRelativeTo(null);
-		f2.setVisible(true);
-		f1.setVisible(false);
-		
-	}
 	
 	public void frameDelete(){
 		fDelete = new DeleteMemberView(this);
@@ -82,11 +74,7 @@ public class AdminView {
 		f1.setVisible(false);
 	}
 
-	void createPlayer(String name, String password) throws CreateMemberException {
 
-		controller.createMember(name, password);
-		controller.saveMemberData();
-	}
 	//runAddTransactionSQLrunAddTransactionSQL(Member member, Facility facility, int timeSlot, int paxCount) 
 	void createBooking(int facility, int timeSlot, int paxCount){
 		controller.createBooking(facility,  timeSlot, paxCount);
@@ -100,7 +88,6 @@ public class AdminView {
 		f1.setLocationRelativeTo(null);
 		f1.setVisible(true);
 		if (fDelete!= null) fDelete.setVisible(false);
-		if (f2!= null) f2.setVisible(false);
 		if (fResetPlayer!= null) fResetPlayer.setVisible(false);
 		if (fCreateFacilityView!= null) fCreateFacilityView.setVisible(false);
 		if (fResetAdmin!= null) fResetAdmin.setVisible(false);

@@ -4,6 +4,7 @@ import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
 import Basic.Utility;
+import Common.CreateMemberException;
 
 public class AdminController {
 
@@ -25,25 +26,7 @@ public class AdminController {
 		view2.show();
 	}
 	
-	public void createMember(String name, String password) throws CreateMemberException{
-
-		try{
-			Member p = DataPool.getMember(name);
-			
-			throw new CreateMemberException("Member name exists");
-			
-		}catch(InvalidMemberException ex){
-			
-			//The password's first character must be a letter, 
-			//it must contain at least 4 characters and no more than 15 characters and 
-			//no characters other than letters, numbers and the underscore may be used
-			if(!password.matches("^[a-zA-Z]\\w{3,14}$")) throw new CreateMemberException("Strong password required");
-			
-			password = Utility.getHash(password);
-			Member p = new Member(1, name, password, 0);
-			DataPool.addMember(p);
-		}
-	}
+	
 
 	public void deleteMember(String name) throws InvalidMemberException{
 		try{
@@ -68,29 +51,6 @@ public class AdminController {
 		
 	}
 
-	public ArrayList<Member> getTopScorer(){
-		
-		ArrayList<Member> topList = new ArrayList<Member>();
-		ArrayList<Member> MemberList =  DataPool.getMemberList();
-		
-		//get the highest score
-		int highestScore = MemberList.get(0).getPoints();
-		for(Member Member: MemberList){
-			
-			if(Member.getPoints()>highestScore){
-				highestScore = Member.getPoints();
-			}
-		}
-		
-		for(Member Member: MemberList){
-			
-			if(Member.getPoints()==highestScore){
-				topList.add(Member);				
-			}
-		}
-		
-		return topList;
-	}
 	public ArrayList<Facility> getFacilityList(){
 		return DataPool.getFacilityList();
 	}

@@ -9,11 +9,13 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.*;
 
 import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
+import Common.CreateMemberException;
 import Common.DBQuery;;
 
 public class DataPool {
@@ -26,7 +28,7 @@ public class DataPool {
     	query = new DBQuery();
     }
     
-    public void addMember(Member p)
+    public void addMember(Member p) throws CreateMemberException, SQLException
     {
     	//sql insert statement
     	query.runAddMemberSQL(p);
@@ -91,10 +93,7 @@ public class DataPool {
     	return Members;	
     }
     
-    public ArrayList<Member> getTopScorerMemberList(){
-    	
-    	return query.getTopScorer();
-    }
+
     
     public void closeConnection(){
     	
