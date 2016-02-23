@@ -15,6 +15,7 @@ import java.util.*;
 import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
+import Basic.User;
 import Common.CreateMemberException;
 import Common.DBQuery;;
 
@@ -52,7 +53,7 @@ public class DataPool {
 		boolean state = true;
 
 		try{
-			Member Member = getMember(loginName);
+			User Member = getMember(loginName);
 		}catch(InvalidMemberException e){
 			state = false;
 		}
@@ -61,10 +62,10 @@ public class DataPool {
 	}
     
     
-    public Member getMember(String loginName) throws InvalidMemberException
+    public User getMember(String loginName) throws InvalidMemberException
     {
     	//sql select statement
-       Member Member = query.getMember(loginName);
+       User Member = query.getMember(loginName);
        
        if (Member == null)
     	   throw new InvalidMemberException();
@@ -83,12 +84,12 @@ public class DataPool {
         
     	return TimeSlot_;	
     }
-    public ArrayList<Member> getMemberList(){
+    public ArrayList<User> getMemberList(){
     	
     	//select all statemenet
     	//sql select statement
     	String statement = "Select * from User";
-        ArrayList<Member> Members = query.runGetMemberListQuery(statement);
+        ArrayList<User> Members = query.runGetMemberListQuery(statement);
         
     	return Members;	
     }

@@ -11,14 +11,15 @@ import java.io.*;
 import java.util.*;
 
 import Basic.Member;
+import Basic.User;
 import Common.DBQuery;
 //import Game.Card;
 
 public class DataFactory {
 
-	public static ArrayList<Member> getAllMembers() {
+	public static ArrayList<User> getAllMembers() {
 
-		ArrayList<Member> MemberList = new ArrayList<Member>();
+		ArrayList<User> MemberList = new ArrayList<User>();
 
 		// if the storage of Members' data is changed to a xml file
 		// or a database, we just need to change this part of the code.

@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Basic.Member;
+import Basic.User;
 import Basic.Utility;
 import Common.DBQuery;
 
@@ -104,17 +105,24 @@ public class AdminModule {
 			String username = usernameField.getText();
 			String password = passwordField.getText();
 			String hashedPassword = Utility.getHash(password);
-			Member logInUser;
+			User logInUser;
 			try {
 				logInUser = dp.authenticateMember(username, hashedPassword);
 				if (logInUser!=null){
 					loginFrame.setVisible(false);
-					Admin admin = new Admin();
+					
 					DataPool playerPool = new DataPool();
-					AdminController controller = new AdminController(admin, playerPool);
-					AdminView view = new AdminView(admin, controller);
-					controller.attachView(view);
-					controller.run();
+					AdminController controller = new AdminController(logInUser, playerPool);
+					if (logInUser.getRole().equalsIgnoreCase("admin")){
+						AdminView view = new AdminView(logInUser, controller);
+						controller.attachView(view);
+						controller.run();
+					}
+					else {
+						
+					}
+					
+					
 				}
 				else JOptionPane.showMessageDialog(panel, "Log in failed!","Information", JOptionPane.PLAIN_MESSAGE);
 

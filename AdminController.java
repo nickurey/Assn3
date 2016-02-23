@@ -3,15 +3,16 @@ import java.util.*;
 import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
+import Basic.User;
 import Basic.Utility;
 import Common.CreateMemberException;
 
 public class AdminController {
 
 	private DataPool DataPool;
-	private Admin admin;
+	private User admin;
 	private AdminView view2;
-	public AdminController(Admin admin, DataPool DataPool) {
+	public AdminController(User admin, DataPool DataPool) {
 		this.DataPool = DataPool;
 		this.admin = admin;
 	}
@@ -30,7 +31,7 @@ public class AdminController {
 
 	public void deleteMember(String name) throws InvalidMemberException{
 		try{
-			Member p = DataPool.getMember(name);
+			User p = DataPool.getMember(name);
 			DataPool.removeMember(name);
 		}
 		catch(InvalidMemberException ex){
@@ -40,7 +41,7 @@ public class AdminController {
 
 	public void resetMemberPassword(String name, String password) throws CreateMemberException{
 		try{
-			Member p = DataPool.getMember(name);
+			User p = DataPool.getMember(name);
 			if(!password.matches("^[a-zA-Z]\\w{3,14}$")) throw new CreateMemberException("Strong password required");
 			password = Utility.getHash(password);
 			p.setHashedPassword(password);

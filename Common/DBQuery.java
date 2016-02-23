@@ -16,6 +16,7 @@ import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
 import Basic.Transaction;
+import Basic.User;
 
 public class DBQuery {
 
@@ -44,34 +45,34 @@ public class DBQuery {
 
 	}
 	
-	public Member getMember(String loginName){
+	public User getMember(String loginName){
 		String query = "Select * from User where username='"+loginName+"'";
-		ArrayList<Member> Members = runGetMemberListQuery(query); 
-		Member Member = null;
+		ArrayList<User> Users = runGetMemberListQuery(query); 
+		User u = null;
 		
-		if(Members.size()!=0){
-			Member = Members.get(0);
+		if(Users.size()!=0){
+			u = Users.get(0);
 		}
 		
-		return Member;
+		return u;
 	}
 	
-	public Member authenticateMember(String loginName, String hashedPassword){
+	public User authenticateMember(String loginName, String hashedPassword){
 		String query = "Select * from User where username='"+loginName+"' and password='"+hashedPassword+"'";
-		ArrayList<Member> Members = runGetMemberListQuery(query); 
-		Member Member = null;
+		ArrayList<User> Members = runGetMemberListQuery(query); 
+		User u = null;
 		
 		if(Members.size()!=0){
-			Member = Members.get(0);
+			u = Members.get(0);
 		}
 		
-		return Member;
+		return u;
 	}
 
-	public ArrayList<Member> runGetMemberListQuery(String query) {
+	public ArrayList<User> runGetMemberListQuery(String query) {
 		
     
-		ArrayList<Member> Members = new ArrayList<Member>();
+		ArrayList<User> Users = new ArrayList<User>();
 		
 		try {
 			Statement stmt = dbConnection.createStatement();
@@ -86,11 +87,11 @@ public class DBQuery {
 				String role = rset.getString("role");
 				int membership = Integer.parseInt(rset.getString("membership"));
 				
-				Member member = new Member(id, login,hashPW, membership);
-				member.setfName(fN);
-				member.setlName(lN);
-				member.setRole(role);
-				Members.add(member);
+				User user = new Member(id, login,hashPW, membership);
+				user.setfName(fN);
+				user.setlName(lN);
+				user.setRole(role);
+				Users.add(user);
 			}
 
 		} catch (Exception e) {
@@ -98,7 +99,7 @@ public class DBQuery {
 			System.out.println(e.getMessage());
 		}
 		
-		return Members;
+		return Users;
 	}
 
 	public boolean checkIfMemberExists(String username){

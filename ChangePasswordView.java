@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class ResetAdminPasswordView extends JFrame{
+public class ChangePasswordView extends JFrame{
 	private Admin admin;
 	//private AdminController controller;
 	private JPanel panel;
@@ -15,20 +15,28 @@ public class ResetAdminPasswordView extends JFrame{
 	private JTextField input0, input1;
 	private AdminView controller;
 	
-	public ResetAdminPasswordView(AdminView controller){
+	public ChangePasswordView(AdminView controller){
 		
 		this.controller=controller;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
 		panel = new JPanel();
 		
 		label0 = new JLabel("Password");
+		label0.setBounds(6, 70, 207, 37);
 		input0 = new JTextField();
+		input0.setBounds(137, 70, 307, 37);
 		label1 = new JLabel("Retype password");
+		label1.setBounds(6, 108, 219, 42);
 		input1 = new JTextField();
+		input1.setBounds(137, 108, 307, 42);
 		submitButton = new JButton("Submit");
+		submitButton.setBounds(237, 162, 147, 44);
 		submitButton.addActionListener(new SubmitButtonListener());
 		cancelButton = new JButton("Cancel");
+		cancelButton.setBounds(78, 162, 147, 44);
 		cancelButton.addActionListener(new ButtonListener());
+		panel.setLayout(null);
 		
 		panel.add(label0);
 		panel.add(input0);
@@ -37,12 +45,10 @@ public class ResetAdminPasswordView extends JFrame{
 		
 		panel.add(submitButton);
 		panel.add(cancelButton);
-		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-		panel.setBorder(BorderFactory.createTitledBorder("Change Admin Password"));
-		panel.setLayout(new GridLayout(3,2));
+		panel.setBorder(BorderFactory.createTitledBorder("Change Password"));
 		panel.setBackground(Color.white);
 		
-		add(panel);
+		getContentPane().add(panel);
 		
 		
 	}

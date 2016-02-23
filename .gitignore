@@ -82,3 +82,17 @@
 /RegisterMemberView$SubmitButtonListener.class
 /RegisterMemberView.class
 /AdminModule$ButtonRegisterListener.class
+/ChangePasswordView$ButtonListener.class
+/ChangePasswordView$SubmitButtonListener.class
+/ChangePasswordView.class
+/MainMenuMemberView$ButtonListener.class
+/MainMenuMemberView$ChangeAdminPasswordButtonListener.class
+/MainMenuMemberView$CreateFacilityButtonListener.class
+/MainMenuMemberView$LogoutButtonListener.class
+/MainMenuMemberView$ResetMemberButtonListener.class
+/MainMenuMemberView$SearchFacilityButtonListener.class
+/MainMenuMemberView.class
+/MainMenuMemberView$ChangePasswordButtonListener.class
+/MainMenuMemberView$UpdateInfoButtonListener.class
+/MainMenuMemberView$ViewBookingButtonListener.class
+/MemberView.class

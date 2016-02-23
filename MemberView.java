@@ -5,12 +5,12 @@ import Basic.Member;
 import Basic.User;
 import Common.CreateMemberException;
 
-public class AdminView {
+public class MemberView {
 
 
-	private User admin;
+	private User member;
 	private AdminController controller;
-	private MainMenuView f1;
+	private MainMenuMemberView f1;
 	private CreateBookingView fBookingView;
 	private CreateFacilityView fCreateFacilityView;
 	private UpdateFacilityView fUpdateFacility;
@@ -19,11 +19,11 @@ public class AdminView {
 	private SearchFacilityView fSearchFacility;
 	private ChangePasswordView fResetAdmin;
 	
-	public AdminView(User admin, AdminController controller) {
+	public MemberView(User member, AdminController controller) {
 
-		this.admin = admin;
+		this.member = member;
 		this.controller = controller;
-		f1 = new MainMenuView(this);
+		f1 = new MainMenuMemberView(this);
 		f1.pack();
 		f1.setLocationRelativeTo(null);
 
@@ -37,9 +37,6 @@ public class AdminView {
 		f1.setVisible(true);
 		controller.saveMemberData();
 	}
-	public void showMenuMember() {
-		
-	}
 	
 	public void run(){
 		f1.setLocationRelativeTo(null);
@@ -52,23 +49,7 @@ public class AdminView {
 		f1.setVisible(false);
 	}
 	
-	
-	public void frameDelete(){
-		fDelete = new DeleteMemberView(this);
-		fDelete.pack();
-		fDelete.setLocationRelativeTo(null);
-		fDelete.setVisible(true);
-		f1.setVisible(false);
-		
-	}
-	public void frameResetPlayer(){
-		fResetPlayer = new ResetMemberPasswordView(this);
-		fResetPlayer.pack();
-		fResetPlayer.setLocationRelativeTo(null);
-		fResetPlayer.setVisible(true);
-		f1.setVisible(false);
-		
-	}
+
 
 	public void frameChangeAdminPassword(){
 		fResetAdmin = new ChangePasswordView(this);
