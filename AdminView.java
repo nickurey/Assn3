@@ -8,7 +8,7 @@ import Common.CreateMemberException;
 public class AdminView {
 
 
-	private User admin;
+	private User loginUser;
 	private AdminController controller;
 	private MainMenuView f1;
 	private CreateBookingView fBookingView;
@@ -19,9 +19,10 @@ public class AdminView {
 	private SearchFacilityView fSearchFacility;
 	private ChangePasswordView fResetAdmin;
 	
-	public AdminView(User admin, AdminController controller) {
+	
+	public AdminView(User a, AdminController controller) {
 
-		this.admin = admin;
+		this.loginUser = a;
 		this.controller = controller;
 		f1 = new MainMenuView(this);
 		f1.pack();
@@ -31,7 +32,13 @@ public class AdminView {
 	public static void main(String []args){
 
 	}
-	
+	public boolean isAdmin(){
+		if (loginUser.getRole().equalsIgnoreCase("admin")) return true;
+		else return false;
+	}
+	public User getLoginUser(){
+		return loginUser;
+	}
 	public void show() {
 		f1.setLocationRelativeTo(null);
 		f1.setVisible(true);
@@ -46,7 +53,7 @@ public class AdminView {
 		f1.setVisible(true);
 	}
 	public void frameCreateBooking(){
-		fBookingView = new CreateBookingView(this);
+		fBookingView = new CreateBookingView(this, 0);
 		fBookingView.setLocationRelativeTo(null);
 		fBookingView.setVisible(true);
 		f1.setVisible(false);
@@ -80,8 +87,8 @@ public class AdminView {
 
 
 	//runAddTransactionSQLrunAddTransactionSQL(Member member, Facility facility, int timeSlot, int paxCount) 
-	void createBooking(int facility, int timeSlot, int paxCount){
-		controller.createBooking(facility,  timeSlot, paxCount);
+	void createBooking(String date, int facility, int timeSlot, int paxCount, int price){
+		controller.createBooking(date, facility,  timeSlot, paxCount, price);
 	}
 	public void deletePlayer(String name) throws InvalidMemberException {
 		controller.deleteMember(name);
@@ -155,6 +162,13 @@ public class AdminView {
 	public void updateFacility(int idToUpdate, String name, String facility, int pricePeak, int priceNonPeak, int cap) {
 		// TODO Auto-generated method stub
 		controller.updateFacility(idToUpdate,  name,  facility,  pricePeak,  priceNonPeak, cap);
+	}
+	public void frameCreateBooking(int idToBook) {
+		// TODO Auto-generated method stub
+		fBookingView = new CreateBookingView(this, idToBook);
+		fBookingView.setLocationRelativeTo(null);
+		fBookingView.setVisible(true);
+		f1.setVisible(false);
 	}
 
 

@@ -113,14 +113,10 @@ public class AdminModule {
 					
 					DataPool playerPool = new DataPool();
 					AdminController controller = new AdminController(logInUser, playerPool);
-					if (logInUser.getRole().equalsIgnoreCase("admin")){
 						AdminView view = new AdminView(logInUser, controller);
 						controller.attachView(view);
 						controller.run();
-					}
-					else {
-						
-					}
+
 					
 					
 				}

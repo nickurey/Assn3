@@ -108,9 +108,9 @@ public class DataPool {
 		
 	}
 
-	public void createBooking(int member, int facility, int timeSlot, int paxCount) {
+	public void createBooking(String date, int member, int facility, int timeSlot, int paxCount, int price) {
 		// TODO Auto-generated method stub
-		query.runAddTransactionSQL(member, facility, timeSlot, paxCount);
+		query.runAddTransactionSQL(date, member, facility, timeSlot, paxCount, price);
 	}
 
 	public void createFacility(String name, String facility, int pricePeak, int priceNonPeak, int cap) {
@@ -126,6 +126,11 @@ public class DataPool {
 	public void updateFacility(int idToUpdate, String name, String facility, int pricePeak, int priceNonPeak, int cap) {
 		// TODO Auto-generated method stub
 		query.runUpdateFacility(idToUpdate,  name,  facility,  pricePeak,  priceNonPeak, cap);
+	}
+
+	public int getTotalBookingCountAt(String date, int timeSlot, int facilityID) {
+		// TODO Auto-generated method stub
+		return query.runGetTotalBookingCountAt(date,  timeSlot,  facilityID);
 	}
     
      

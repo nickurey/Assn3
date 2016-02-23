@@ -96,3 +96,5 @@
 /MainMenuMemberView$UpdateInfoButtonListener.class
 /MainMenuMemberView$ViewBookingButtonListener.class
 /MemberView.class
+/SearchFacilityView$ButtonBookListener.class
+/CreateBookingView$RefreshPriceOnDemand.class

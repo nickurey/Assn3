@@ -19,6 +19,7 @@ public class MainMenuView extends JFrame{
 	public MainMenuView(AdminView controller){
 		
 		this.controller=controller;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		panel = new JPanel();
@@ -37,12 +38,19 @@ public class MainMenuView extends JFrame{
 		button5.addActionListener(new LogoutButtonListener());
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 		//panel.add(label);
-		panel.add(button0);
-		panel.add(button1);
-		panel.add(button2);
-		panel.add(button3);
-		panel.add(button4);
-		panel.add(button5);
+		if (controller.isAdmin()){
+			
+			panel.add(button1);
+			panel.add(button2);
+			panel.add(button3);
+			panel.add(button4);
+			panel.add(button5);
+		}
+		else {
+			panel.add(button0);
+			panel.add(button3);
+			panel.add(button4);
+		}
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		panel.setBorder(BorderFactory.createTitledBorder("ADMIN MAIN MENU"));
 		panel.setLayout(new GridLayout(6,1));

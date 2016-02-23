@@ -75,10 +75,10 @@ public class AdminController {
 	}
 
 
-	public void createBooking(int facility, int timeSlot, int paxCount) {
+	public void createBooking(String date, int facility, int timeSlot, int paxCount, int price) {
 		// TODO Auto-generated method stub
 		int a = admin.getId();
-		DataPool.createBooking(a, facility,  timeSlot,  paxCount);
+		DataPool.createBooking(date, a, facility,  timeSlot,  paxCount, price);
 	}
 
 

@@ -253,20 +253,18 @@ System.out.println(sql);
 		return timeSlot;
 	}
 	
-	public void runAddTransactionSQL(int member, int facility, int timeSlot, int paxCount) {
+	public void runAddTransactionSQL(String date, int member, int facility, int timeSlot, int paxCount, int price) {
 		
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
 			Date aDate = format.parse("15/02/2016");
-			String sql = "Insert into Transaction (TransactionDate,MemberUserID,FacilityID,TimeSlot,PaxCount,Status)";
+			String sql = "Insert into Transaction (TransactionDate,MemberUserID,FacilityID,TimeSlot,PaxCount,Price,Status)";
 			//sql+=" value(TO_DATE('15/02/2016','dd/mm/yyyy'), "
-			sql+=" value('2016-10-9', "
-//					+ "'"+member.getLoginName()
-//					+"','"+facility.getName()
+			sql+=" value('"+date+"', "
 					+"'"+member
 					+"','"+facility
 					+"','"+timeSlot+"',"
-					+paxCount
+					+paxCount+","+price
 					+", 1"+
 					")";
 			System.out.println(sql);
@@ -365,6 +363,28 @@ System.out.println(sql);
 			System.out.println("SQL failed");
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public int runGetTotalBookingCountAt(String date, int timeSlot, int facilityID) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		String sql; 
+			sql = "Select * from Transaction where TransactionDate = '"+date+"' and timeSlot = '"+timeSlot+"' and facilityID ='"+facilityID+"' and status = '1'";
+		try {
+			System.out.println(sql);
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rset = stmt.executeQuery(sql);
+
+			while (rset.next()) {
+				int pax = Integer.parseInt(rset.getString("PaxCount"));
+				count+=pax;
+			}
+			System.out.println("Pax: "+count);
+		} catch (Exception e) {
+			System.out.println("Add SQL failed");
+			System.out.println(e.getMessage());
+		}
+		return count;
 	}
 
 }

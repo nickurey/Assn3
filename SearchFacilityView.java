@@ -50,12 +50,13 @@ public class SearchFacilityView extends JFrame{
 		setBounds(100, 100, 450, 300);
 
 		this.controller=controller;
+		
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.setLayout(null);
 
 		searchField = new JTextField();
-		searchField.setBounds(6, 26, 338, 26);
+		searchField.setBounds(6, 18, 338, 26);
 		panel.add(searchField);
 		searchField.setColumns(10);
 
@@ -64,7 +65,7 @@ public class SearchFacilityView extends JFrame{
 		for(String f: listOfType){
 			facilityType.addItem(f);		
 		}
-		facilityType.setBounds(193, 52, 151, 27);
+		facilityType.setBounds(193, 44, 151, 27);
 		panel.add(facilityType);
 
 		JLabel filterLabel = new JLabel("Filter");
@@ -72,7 +73,7 @@ public class SearchFacilityView extends JFrame{
 		panel.add(filterLabel);
 
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(344, 26, 100, 29);
+		btnSearch.setBounds(344, 18, 100, 29);
 		btnSearch.addActionListener(new SubmitButtonListener());
 		panel.add(btnSearch);
 
@@ -82,7 +83,7 @@ public class SearchFacilityView extends JFrame{
 		panel.setBackground(Color.white);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(344, 52, 100, 26);
+		btnCancel.setBounds(344, 44, 100, 26);
 		btnCancel.addActionListener(new ButtonListener());
 		panel.add(btnCancel);
 
@@ -90,19 +91,27 @@ public class SearchFacilityView extends JFrame{
 		getContentPane().add(panel);
 		
 		searchResult = new JPanel();
-		searchResult.setBounds(6, 83, 438, 155);
+		searchResult.setBounds(6, 75, 438, 155);
 		panel.add(searchResult);
 		searchResult.setLayout(null);
+		if (controller.isAdmin()){
+			btnUpdate = new JButton("Update");
+			btnUpdate.setBounds(327, 235, 117, 29);
+			btnUpdate.addActionListener(new ButtonUpdateListener());
+			panel.add(btnUpdate);
+			
+			btnDelete = new JButton("Delete");
+			btnDelete.setBounds(212, 235, 117, 29);
+			btnDelete.addActionListener(new ButtonDeleteListener());
+			panel.add(btnDelete);
+		}
+		else {
+			btnDelete = new JButton("Book");
+			btnDelete.setBounds(212, 235, 117, 29);
+			btnDelete.addActionListener(new ButtonBookListener());
+			panel.add(btnDelete);
+		}
 		
-		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(327, 243, 117, 29);
-		btnUpdate.addActionListener(new ButtonUpdateListener());
-		panel.add(btnUpdate);
-		
-		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(212, 243, 117, 29);
-		btnDelete.addActionListener(new ButtonDeleteListener());
-		panel.add(btnDelete);
 		
 		label = new JLabel("");
 		label.setBounds(6, 248, 205, 16);
@@ -123,6 +132,14 @@ public class SearchFacilityView extends JFrame{
 //			label.setText(selectedFacility.getSelection().getActionCommand());
 			int idToUpdate = Integer.parseInt(selectedFacility.getSelection().getActionCommand());
 			controller.frameUpdateFacility(idToUpdate);
+		}
+	}
+	private class ButtonBookListener implements ActionListener{
+
+		public void actionPerformed(ActionEvent e){
+//			label.setText(selectedFacility.getSelection().getActionCommand());
+			int idToBook = Integer.parseInt(selectedFacility.getSelection().getActionCommand());
+			controller.frameCreateBooking(idToBook);
 		}
 	}
 	private class ButtonDeleteListener implements ActionListener{
