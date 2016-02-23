@@ -15,6 +15,7 @@ import java.util.*;
 import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
+import Basic.Transaction;
 import Basic.User;
 import Common.CreateMemberException;
 import Common.DBQuery;;
@@ -78,6 +79,12 @@ public class DataPool {
         
     	return Facilities;	
     }
+    public ArrayList<Transaction> getTransactionList(){
+    	String statement = "Select * from Transaction where status ='1'";
+        ArrayList<Transaction> Transactions = query.runGetTransactions(statement);
+        
+    	return Transactions;	
+    }
     public ArrayList<TimeSlot> getSlotList(){
     	String statement = "Select * from timeslot";
         ArrayList<TimeSlot> TimeSlot_ = query.runGetTimeSlot(statement);
@@ -131,6 +138,11 @@ public class DataPool {
 	public int getTotalBookingCountAt(String date, int timeSlot, int facilityID) {
 		// TODO Auto-generated method stub
 		return query.runGetTotalBookingCountAt(date,  timeSlot,  facilityID);
+	}
+
+	public void deactivateBooking(int idToDeactivate) {
+		// TODO Auto-generated method stub
+		query.runDeactivateBooking(idToDeactivate);
 	}
     
      

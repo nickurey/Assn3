@@ -11,9 +11,10 @@ public class AdminView {
 	private User loginUser;
 	private AdminController controller;
 	private MainMenuView f1;
-	private CreateBookingView fBookingView;
+	private CreateBookingView fCreateNewBookingView;
 	private CreateFacilityView fCreateFacilityView;
 	private UpdateFacilityView fUpdateFacility;
+	private BookingsView fBookingsView;
 	private DeleteMemberView fDelete;
 	private ResetMemberPasswordView fResetPlayer;
 	private SearchFacilityView fSearchFacility;
@@ -53,9 +54,9 @@ public class AdminView {
 		f1.setVisible(true);
 	}
 	public void frameCreateBooking(){
-		fBookingView = new CreateBookingView(this, 0);
-		fBookingView.setLocationRelativeTo(null);
-		fBookingView.setVisible(true);
+		fCreateNewBookingView = new CreateBookingView(this, 0);
+		fCreateNewBookingView.setLocationRelativeTo(null);
+		fCreateNewBookingView.setVisible(true);
 		f1.setVisible(false);
 	}
 	
@@ -102,8 +103,9 @@ public class AdminView {
 		if (fResetPlayer!= null) fResetPlayer.setVisible(false);
 		if (fCreateFacilityView!= null) fCreateFacilityView.setVisible(false);
 		if (fResetAdmin!= null) fResetAdmin.setVisible(false);
-		if (fBookingView!= null) fBookingView.setVisible(false);
+		if (fCreateNewBookingView!= null) fCreateNewBookingView.setVisible(false);
 		if (fSearchFacility!= null) fSearchFacility.setVisible(false);
+		if (fBookingsView!= null) fBookingsView.setVisible(false);
 		
 		
 	}
@@ -165,10 +167,18 @@ public class AdminView {
 	}
 	public void frameCreateBooking(int idToBook) {
 		// TODO Auto-generated method stub
-		fBookingView = new CreateBookingView(this, idToBook);
-		fBookingView.setLocationRelativeTo(null);
-		fBookingView.setVisible(true);
+		fCreateNewBookingView = new CreateBookingView(this, idToBook);
+		fCreateNewBookingView.setLocationRelativeTo(null);
+		fCreateNewBookingView.setVisible(true);
 		f1.setVisible(false);
+	}
+	public void frameViewBooking() {
+		// TODO Auto-generated method stub
+		fBookingsView = new BookingsView(this);
+		fBookingsView.setLocationRelativeTo(null);
+		fBookingsView.setVisible(true);
+		f1.setVisible(false);
+		
 	}
 
 

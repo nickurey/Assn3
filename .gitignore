@@ -98,3 +98,16 @@
 /MemberView.class
 /SearchFacilityView$ButtonBookListener.class
 /CreateBookingView$RefreshPriceOnDemand.class
+/BookingsView$ButtonBookListener.class
+/BookingsView$ButtonDeleteListener.class
+/BookingsView$ButtonListener.class
+/BookingsView$ButtonUpdateListener.class
+/BookingsView$RadioButtonEditor.class
+/BookingsView$RadioButtonRenderer.class
+/BookingsView$SubmitButtonListener$1.class
+/BookingsView$SubmitButtonListener.class
+/BookingsView.class
+/BookingsView$ButtonDeactivateListener.class
+/BookingsView$ButtonDeactivateListener_.class
+/BookingsView$ButtonDeactivateListener_$1.class
+/MainMenuView$ViewBookingButtonListener.class

@@ -252,6 +252,68 @@ System.out.println(sql);
 		
 		return timeSlot;
 	}
+	public TimeSlot getTimeSlotByID(int i){
+		TimeSlot t = null;
+		for (TimeSlot s: runGetTimeSlot("Select * from TimeSlot")){
+			if (s.getID() == i) {
+				t = s;
+				break;
+			}
+		}
+		return t;
+	}
+	public User getUserByID(int i){
+		User t = null;
+		for (User s: runGetMemberListQuery("Select * from user")){
+			if (s.getId() == i) {
+				t = s;
+				break;
+			}
+		}
+		return t;
+	}
+	public Facility getFacilityByID(int i){
+		Facility t = null;
+		for (Facility s: runGetFacilitys("Select * from Facility")){
+			if (s.getId() == i) {
+				t = s;
+				break;
+			}
+		}
+		return t;
+	}
+	public ArrayList<Transaction> runGetTransactions(String query) {
+		
+		ArrayList<Transaction> Transactions = new ArrayList<Transaction>();
+		
+		try {
+			Statement stmt = dbConnection.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+
+			while (rset.next()) {
+				int transactionID =  Integer.parseInt(rset.getString("id"));
+				String transactionDate = rset.getString("TransactionDate");
+				int MemberUserid = Integer.parseInt(rset.getString("MemberUserid"));
+				int FacilityID = Integer.parseInt(rset.getString("FacilityID"));
+				int timeSlot = Integer.parseInt(rset.getString("TimeSlot"));
+				int PaxCount = Integer.parseInt(rset.getString("PaxCount"));
+				int Price = Integer.parseInt(rset.getString("Price"));
+				int status = Integer.parseInt(rset.getString("status"));
+
+
+					Transaction t = new Transaction(  transactionID,transactionDate, getUserByID(MemberUserid),
+							getFacilityByID(FacilityID),getTimeSlotByID(timeSlot), PaxCount, Price,
+							status);
+					Transactions.add(t);
+
+			}
+		} catch (Exception e) {
+			System.out.println("Query failed");
+			System.out.println(e.getMessage());
+		}
+		
+		return Transactions;
+	}
 	
 	public void runAddTransactionSQL(String date, int member, int facility, int timeSlot, int paxCount, int price) {
 		
@@ -385,6 +447,20 @@ System.out.println(sql);
 			System.out.println(e.getMessage());
 		}
 		return count;
+	}
+
+	public void runDeactivateBooking(int idToDeactivate) {
+		// TODO Auto-generated method stub
+		String sql = "Update Transaction set status = 0 where ID = '"+idToDeactivate+"'";
+		System.out.println(sql);
+		try {
+			System.out.println(sql);
+			Statement stmt = dbConnection.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("SQL failed");
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

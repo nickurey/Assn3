@@ -34,8 +34,10 @@ public class CreateFacilityView extends JFrame{
 		dp = new DataPool();
 		
 		ArrayList<String> listOfType = new ArrayList<String>();
-		listOfType.add("restaurant");
-		listOfType.add("ktv");
+		listOfType.add("Restaurant");
+		listOfType.add("Ktv");
+		listOfType.add("Billiard");
+		listOfType.add("Bbq pit");
 		
 		setBounds(100, 100, 450, 300);
 		

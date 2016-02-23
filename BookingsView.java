@@ -13,10 +13,12 @@ import javax.swing.table.TableCellRenderer;
 import Basic.Facility;
 import Basic.Member;
 import Basic.TimeSlot;
+import Basic.Transaction;
 
 
 
-public class SearchFacilityView extends JFrame{
+
+public class BookingsView extends JFrame{
 	private Admin admin;
 	//private AdminController controller;
 	private JPanel panel;
@@ -25,27 +27,28 @@ public class SearchFacilityView extends JFrame{
 	private JTextField input0, input1;
 	private AdminView controller;
 	private DataPool dp;
-	private JTextField searchField;
 	private JComboBox facilityType;
 	private JTable table;
-	private ButtonGroup selectedFacility;
+	private ButtonGroup selectedBooking;
 	private static final Object[][] rowData = {};
-	private static final Object[] columnNames = {"ID","Name","Type","Peak Price","Off Peak Price","Capacity","Select"};
+	private static final Object[] columnNames = {"ID","Date","Member","Facility","TimeSlot","PaxCount","Price"};
 	private JPanel searchResult;
 	private JTable table_1;
 	private JButton btnUpdate;
 	private JButton btnDelete;
 	private JLabel label;
 	
-	public SearchFacilityView(AdminView controller){
+	public BookingsView(AdminView controller){
 
 		//
 		dp = new DataPool();
 
 		ArrayList<String> listOfType = new ArrayList<String>();
-		listOfType.add("all");
-		listOfType.add("restaurant");
-		listOfType.add("ktv");
+		listOfType.add("All");
+		listOfType.add("Restaurant");
+		listOfType.add("Ktv");
+		listOfType.add("Billiard");
+		listOfType.add("Bbq pit");
 
 		setBounds(100, 100, 450, 300);
 
@@ -55,35 +58,25 @@ public class SearchFacilityView extends JFrame{
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.setLayout(null);
 
-		searchField = new JTextField();
-		searchField.setBounds(6, 18, 338, 26);
-		panel.add(searchField);
-		searchField.setColumns(10);
-
 		facilityType = new JComboBox();
 
 		for(String f: listOfType){
 			facilityType.addItem(f);		
 		}
-		facilityType.setBounds(193, 44, 151, 27);
+		facilityType.setBounds(173, 11, 151, 27);
 		panel.add(facilityType);
 
 		JLabel filterLabel = new JLabel("Filter");
-		filterLabel.setBounds(128, 56, 54, 16);
+		filterLabel.setBounds(108, 23, 54, 16);
 		panel.add(filterLabel);
 
-		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(344, 18, 100, 29);
-		btnSearch.addActionListener(new SubmitButtonListener());
-		panel.add(btnSearch);
-
 		//panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-		panel.setBorder(BorderFactory.createTitledBorder("Search Facility"));
+		panel.setBorder(BorderFactory.createTitledBorder("Booking"));
 		//panel.setLayout(new GridLayout(3,2));
 		panel.setBackground(Color.white);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(344, 44, 100, 26);
+		btnCancel.setBounds(324, 11, 100, 26);
 		btnCancel.addActionListener(new ButtonListener());
 		panel.add(btnCancel);
 
@@ -91,26 +84,15 @@ public class SearchFacilityView extends JFrame{
 		getContentPane().add(panel);
 		
 		searchResult = new JPanel();
-		searchResult.setBounds(6, 75, 438, 155);
+		searchResult.setBounds(6, 49, 418, 181);
 		panel.add(searchResult);
 		searchResult.setLayout(null);
-		if (controller.isAdmin()){
-			btnUpdate = new JButton("Update");
-			btnUpdate.setBounds(327, 235, 117, 29);
-			btnUpdate.addActionListener(new ButtonUpdateListener());
-			panel.add(btnUpdate);
-			
-			btnDelete = new JButton("Delete");
-			btnDelete.setBounds(212, 235, 117, 29);
-			btnDelete.addActionListener(new ButtonDeleteListener());
-			panel.add(btnDelete);
-		}
-		else {
+
 			btnDelete = new JButton("Book");
 			btnDelete.setBounds(212, 235, 117, 29);
-			btnDelete.addActionListener(new ButtonBookListener());
+			btnDelete.addActionListener(new ButtonDeactivateListener());
 			panel.add(btnDelete);
-		}
+
 		
 		
 		label = new JLabel("");
@@ -130,79 +112,54 @@ public class SearchFacilityView extends JFrame{
 
 		public void actionPerformed(ActionEvent e){
 //			label.setText(selectedFacility.getSelection().getActionCommand());
-			int idToUpdate = Integer.parseInt(selectedFacility.getSelection().getActionCommand());
+			int idToUpdate = Integer.parseInt(selectedBooking.getSelection().getActionCommand());
 			controller.frameUpdateFacility(idToUpdate);
 		}
 	}
-	private class ButtonBookListener implements ActionListener{
-
-		public void actionPerformed(ActionEvent e){
-//			label.setText(selectedFacility.getSelection().getActionCommand());
-			int idToBook = Integer.parseInt(selectedFacility.getSelection().getActionCommand());
-			controller.frameCreateBooking(idToBook);
-		}
-	}
-	private class ButtonDeleteListener implements ActionListener{
-
-		public void actionPerformed(ActionEvent e){
-			int idToDelete = Integer.parseInt(selectedFacility.getSelection().getActionCommand());
-			int n = JOptionPane.showConfirmDialog(panel, "The selected Facility will be delete. Confirm?","Warning", JOptionPane.OK_CANCEL_OPTION);
-			if (n == JOptionPane.YES_OPTION) {
-				dp.removeFacility(idToDelete);
-				searchResult.removeAll();
-				searchResult.revalidate();
-				searchResult.repaint();
-			} else if (n == JOptionPane.NO_OPTION) {
-
-			} else {
-
-			}
-		}
-	}
-
-	private class SubmitButtonListener implements ActionListener{
+	private class ButtonDeactivateListener_ implements ActionListener{
 
 		public void actionPerformed(ActionEvent e){
 
-			String searchTerm = searchField.getText();
 			String facility = (String) facilityType.getSelectedItem();
 			
-			ArrayList<Facility> fList = dp.getFacilityList();
+			ArrayList<Transaction> fList = dp.getTransactionList();
 			DefaultTableModel listTableModel;
 			listTableModel = new DefaultTableModel(rowData, columnNames);
 			int resultCount = 0;
 			JRadioButton bt;
-			for (Facility f: fList) {
-				if (f.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+			for (Transaction f: fList) {
+				
 					if (!(facility.equalsIgnoreCase("all"))){
-						if (f.getType().toLowerCase().contains(facility.toLowerCase())){
+						if (f.getFacility().getType().toLowerCase().contains(facility.toLowerCase())){
 							bt = new JRadioButton();
-							bt.setActionCommand(String.valueOf(f.getId()));
+							bt.setActionCommand(String.valueOf(f.getID()));
 							resultCount++;
-							listTableModel.addRow(new Object[]{f.getId(), f.getName(), f.getType(), f.getPeakPrice(), f.getNonPeakPrice(),f.getCapacity(), bt});
+							// {"ID","Date","Member","Facility","TimeSlot","PaxCount","Price"};
+							listTableModel.addRow(new Object[]{f.getID(), f.getDate(), f.getUser().getfName() + f.getUser().getlName(),
+									f.getTimeSlot().toString(), f.getPaxCount(),f.getPrice(), f.getStatus()});
 							
 						}
 					} else {
 						bt = new JRadioButton();
-						bt.setActionCommand(String.valueOf(f.getId()));
+						bt.setActionCommand(String.valueOf(f.getID()));
 						resultCount++;
-						listTableModel.addRow(new Object[]{f.getId(), f.getName(), f.getType(), f.getPeakPrice(), f.getNonPeakPrice(), f.getCapacity(), bt});
-						
+						listTableModel.addRow(new Object[]{f.getID(), f.getDate(), f.getUser().getfName() + f.getUser().getlName(),
+								f.getTimeSlot().toString(), f.getPaxCount(),f.getPrice(), f.getStatus()});
 					}
 					
-				}
+				
 				
 				}
-			label.setText("Found "+resultCount+(resultCount==1?" record.":" records."));
+			label.setText("Found "+resultCount+(resultCount==1?" booking.":" bookings."));
 			table = new JTable(listTableModel){
 				public void tableChanged(TableModelEvent e) {
 					super.tableChanged(e);
 					repaint();
 				}
 			};
-			selectedFacility = new ButtonGroup();
+			selectedBooking = new ButtonGroup();
 			for (int i = 0; i < resultCount; i++){
-				selectedFacility.add((JRadioButton) listTableModel.getValueAt(i, 5));	
+				selectedBooking.add((JRadioButton) listTableModel.getValueAt(i, 5));	
 			}
 
 			table.getColumn("Select").setCellRenderer(
@@ -238,6 +195,24 @@ public class SearchFacilityView extends JFrame{
 			if (value == null)
 				return null;
 			return (Component) value;
+		}
+	}
+
+	private class ButtonDeactivateListener implements ActionListener{
+
+		public void actionPerformed(ActionEvent e){
+			int idToDeactivate = Integer.parseInt(selectedBooking.getSelection().getActionCommand());
+			int n = JOptionPane.showConfirmDialog(panel, "The selected Booking will be deactivated. Confirm?","Warning", JOptionPane.OK_CANCEL_OPTION);
+			if (n == JOptionPane.YES_OPTION) {
+				dp.deactivateBooking(idToDeactivate);
+				searchResult.removeAll();
+				searchResult.revalidate();
+				searchResult.repaint();
+			} else if (n == JOptionPane.NO_OPTION) {
+
+			} else {
+
+			}
 		}
 	}
 

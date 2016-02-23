@@ -28,11 +28,11 @@ public class MainMenuView extends JFrame{
 		button0.addActionListener(new ButtonListener());
 		button1 = new JButton("Create a Facility");
 		button1.addActionListener(new CreateFacilityButtonListener());
-		button2 = new JButton("Reset member's password");
-		button2.addActionListener(new ResetMemberButtonListener());
+		button2 = new JButton("View bookings");
+		button2.addActionListener(new ViewBookingButtonListener());
 		button3 = new JButton("Search Facility");
 		button3.addActionListener(new SearchFacilityButtonListener());
-		button4 = new JButton("Change Admin Password");
+		button4 = new JButton("Change Password");
 		button4.addActionListener(new ChangeAdminPasswordButtonListener());
 		button5 = new JButton("Log Out");
 		button5.addActionListener(new LogoutButtonListener());
@@ -48,8 +48,10 @@ public class MainMenuView extends JFrame{
 		}
 		else {
 			panel.add(button0);
+			panel.add(button2);
 			panel.add(button3);
 			panel.add(button4);
+			panel.add(button5);
 		}
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		panel.setBorder(BorderFactory.createTitledBorder("ADMIN MAIN MENU"));
@@ -74,10 +76,10 @@ public class MainMenuView extends JFrame{
 			
 		}
 	}
-	private class ResetMemberButtonListener implements ActionListener{
+	private class ViewBookingButtonListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
-			controller.frameResetPlayer();
+			controller.frameViewBooking();
 			
 		}
 	}
